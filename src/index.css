@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
-html, body, #root {
+html,
+body,
+#root {
     height: 100%;
 }
 
@@ -31,6 +33,17 @@ html, body, #root {
     pointer-events: none;
     opacity: 0.4;
 }
+
 .colorRed {
     background: red;
+}
+
+
+@layer utilities {
+    .gradient-text {
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
 }
