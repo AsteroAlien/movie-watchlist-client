@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Header from './../components/Header';
 function Welcome() {
     return (
-        <div className='h-full bg-background film-grain'>
+        <Box className='h-full bg-background film-grain'>
             <Header />
             <section id='welcome' className='h-full relative overflow-hidden'>
                 {/* Background glow */}
@@ -10,9 +10,9 @@ function Welcome() {
                 <Box className='container relative pt-20 pb-32'></Box>
             </section>
             <section id='sub-info' className='h-120 py24 bg-linear-to-b from-background to-secondary/20'></section>
-            <section id='create-account' className='h-120 py24 bg-background film-grain'></section>
+            <section id='create-account' className='h-120 py24'></section>
             <footer className="border-t border-border py-12"></footer>
-        </div>
+        </Box>
     )
 }
 
