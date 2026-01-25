@@ -1,24 +1,23 @@
 @import "tailwindcss";
 
-html,
-body,
-#root {
-    height: 100%;
-}
-
-:root {
-    --background: 0 0% 4%;
-    --primary: 0 72% 51%;
-    --border: 0 0% 16%;
-
+@theme {
+    --color-background: hsl(0 0% 4%);
+    --color-primary: hsl(0 72% 51%);
+    --color-border: hsl(0 0% 16%);
+    --color-foreground: hsl(0 0% 98%);
+    
     /* Custom tokens */
     --gradient-primary: linear-gradient(135deg, hsl(0, 72%, 51%) 0%, hsl(35, 92%, 50%) 100%);
     --gradient-card: linear-gradient(180deg, hsl(0, 0%, 9%) 0%, hsl(0, 0%, 5%) 100%);
     --gradient-hero: linear-gradient(180deg, transparent 0%, hsl(0, 0%, 4%) 100%);
     --shadow-glow: 0 0 40px hsl(0, 72%, 51%, 0.3);
     --shadow-card: 0 8px 32px hsl(0, 0%, 0%, 0.5);
+}
 
-    border: hsl(var(--border));
+html,
+body,
+#root {
+    height: 100%;
 }
 
 .film-grain {
@@ -47,3 +46,20 @@ body,
         background-clip: text;
     }
 }
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.05em;
+  }
+}
+
