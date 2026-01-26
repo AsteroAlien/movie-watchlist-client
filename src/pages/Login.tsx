@@ -79,8 +79,8 @@ function Login() {
                     </Box>
                     <Label classes={'pl-5 font-display tracking-wider font-bold'} text="WELCOME BACK" variant="h1" sx={{ mb: 2, color: '#ffffff', fontSize: '2rem', letterSpacing: '0.025em' }} />
                     <Label classes={'pl-5 font-display tracking-wider font-medium'} text="Sign in to continue to your watchlist" variant="h6" sx={{ mb: 4, color: 'var(--muted-foreground)', fontSize: '1rem', letterSpacing: '0.025em' }} />
-                    <form className='w-full flex'>
-                        <Card className='h-5 pl-5 pr-5 pb-5' sx={{ background: 'transparent', width: '100%', height: '100%' }}>
+                    <Card className='w-full flex' sx={{ background: 'transparent', width: '100%', height: '100%' }}>
+                        <form className='h-full pl-5 pr-5 pb-5'>
                             <form.Field
                                 name='email'
                                 children={(field) => (
@@ -130,8 +130,8 @@ function Login() {
                                 <Label classes={'mt-4 font-display tracking-wider font-medium'} text="Don't have an account? " variant="h6" sx={{ color: 'var(--muted-foreground)', fontSize: '1rem' }} />
                                 <Link to='/dashboard/signup' className='flex mb-2 font-display tracking-wider font-medium gradient-text ml-2' style={{ fontSize: '1rem', }}>Sign up</Link>
                             </Box>
-                        </Card>
-                    </form>
+                        </form>
+                    </Card>
                 </Box>
             </Box>
             <Box className='w-full h-full flex justify-center items-center'>
