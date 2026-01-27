@@ -1,19 +1,179 @@
-import Box from '@mui/material/Box';
+import { Link } from '@tanstack/react-router';
 import { useForm } from '@tanstack/react-form';
 import { sigupSchema } from '../validators/authValidators';
+
+import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Label from '../components/Label';
-import TheatersRoundedIcon from '@mui/icons-material/TheatersRounded';
-import { Link } from '@tanstack/react-router';
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
+import Button from '@mui/material/Button';
+import FormField from './../components/FormField';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Button from '@mui/material/Button';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import TheatersRoundedIcon from '@mui/icons-material/TheatersRounded';
+
+function Signup() {
+    const form = useForm({
+        defaultValues: {
+            name: '',
+            email: '',
+            password: '',
+            confirmPassword: ''
+        },
+        validators: {
+            onChange: sigupSchema
+        },
+        onSubmit: async ({ value }) => {
+            console.log(value)
+        }
+    });
+    return (
+        <Box className='flex h-full'>
+            <Box className='w-full h-full flex justify-center items-center'>
+                <Box className='w-100 h-100 bg-primary/20 rounded-full blur-[150px] pointer-events-none'></Box>
+            </Box>
+             <Box sx={formContainerStyles}>
+                <Box id='signup-container' className='max-w-lg'>
+                    <Box className='group' sx={formHeaderStyles}>
+                        <Box className='from-primary to-accent group-hover:shadow-lg transition-shadow' sx={formIconStyles}>
+                            <TheatersRoundedIcon />
+                        </Box>
+                        <Link to='/' className='text-xl font-display tracking-wider gradient-text font-bold'>WATCHLIST</Link>
+                    </Box>
+                    <Label classes={'font-display tracking-wider'} text="Create Account" variant="h1" sx={titleStyles} />
+                    <Label classes={' font-display tracking-wider'} text="Join to start tracking your movies" variant="h6" sx={subTitleStyles} />
+                    <Card sx={cardStyles}>
+                        <form className='pl-5 pr-5 pb-5'>
+                             <form.Field
+                                name='name'
+                                children={(field) => (
+                                    <>
+                                        {/*fullName*/}
+                                        <FormField placeholder='John Doe' text='Full Name' sxLabel={labelStyles}
+                                            sxTextField={inputStyles} icon={<PersonOutlineIcon sx={iconStyle} />} cls='tracking-wider'
+                                        />
+                                    </>
+                                )}
+                            />
+                            <form.Field
+                                name='email'
+                                children={(field) => (
+                                    <>
+                                        {/*Email*/}
+                                        <FormField placeholder='john.doe@example.com' text='Email' sxLabel={labelStyles}
+                                            sxTextField={inputStyles} icon={<EmailOutlinedIcon sx={iconStyle} />} cls='tracking-wider'
+                                        />
+                                    </>
+                                )}
+                            />
+                            <form.Field
+                                name='password'
+                                children={(field) => (
+                                    <>
+                                        {/*Password*/}
+                                        <FormField placeholder='********' text='Password' sxLabel={labelStyles}
+                                            sxTextField={inputStyles} icon={<LockOutlinedIcon sx={iconStyle} />} cls='tracking-wider'
+                                        />
+                                    </>
+                                )}
+                            />
+                             <form.Field
+                                name='confirmPassword'
+                                children={(field) => (
+                                    <>
+                                        {/*Confirm Password*/}
+                                         <FormField placeholder='********' text='Confirm Password' sxLabel={labelStyles}
+                                            sxTextField={inputStyles} icon={<LockOutlinedIcon sx={iconStyle} />} cls='tracking-wider'
+                                        />
+                                    </>
+                                )}
+                            />
+                            <Button type="submit" variant="contained" fullWidth
+                                sx={buttonStyles}>
+                                Sign In
+                                <ArrowForwardIcon sx={{ ml: '1rem', fontSize: '1.125rem' }} />
+                            </Button>
+                            <Box className='flex justify-center items-center mt-7'>
+                                <Label classes={'font-display tracking-wider'} text="Already have an account ?" variant="h6"
+                                    sx={linkTitleStyles} />
+                                <Link to='/dashboard/login' className='flex mb-2 font-display tracking-wider font-medium gradient-text ml-2' style={{ fontSize: '1rem', }}>Sign in</Link>
+                            </Box>
+                        </form>
+                    </Card>
+                </Box>
+            </Box>
+        </Box>
+    );
+}
+
+export default Signup;
+
+/*Styles*/
+const parentContainerStyles = {
+    display: 'flex',
+    height: '100%'
+};
+
+const titleStyles = {
+    pl: '1.25rem',
+    mb: 2,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    fontSize: '2rem',
+    letterSpacing: '0.025em'
+}
+
+const subTitleStyles = {
+    mb: 3,
+    pl: '1.25rem',
+    color: 'var(--muted-foreground)',
+    fontSize: '1rem',
+    fontWeight: 500,
+    letterSpacing: '0.025em'
+}
+
+const linkTitleStyles = {
+    color: 'var(--muted-foreground)',
+    fontWeight: 500,
+    fontSize: '1rem'
+}
+
+const cardStyles = {
+    width: '100%',
+    display: 'flex',
+    background: 'transparent'
+}
+
+const formContainerStyles = {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column'
+};
+
+const formHeaderStyles = {
+    display: 'flex',
+    alignItems: 'center',
+    mb: '1.75rem',
+    gap: '0.75rem',
+    paddingLeft: '1.25rem'
+};
+
+const formIconStyles = {
+    height: '2.25rem',
+    width: '2.25rem',
+    background: 'var(--gradient-primary)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '0.75rem'
+};
 
 const inputStyles = {
+    width: "100%",
     '& .MuiOutlinedInput-root': {
         backgroundColor: '#1a1a1a',
         height: '2.75rem',
@@ -53,135 +213,14 @@ const buttonStyles = {
         opacity: 0.9,
         transform: 'scale(1.05)',
     },
-}
-function Signup() {
-    const form = useForm({
-        defaultValues: {
-            name: '',
-            email: '',
-            password: '',
-            confirmPassword: ''
-        },
-        validators: {
-            onChange: sigupSchema
-        },
-        onSubmit: async ({ value }) => {
-            console.log(value)
-        }
-    });
-    return (
-        <Box className='flex h-full'>
-            <Box className='w-full h-full flex justify-center items-center'>
-                <Box className='w-100 h-100 bg-primary/20 rounded-full blur-[150px] pointer-events-none'></Box>
-            </Box>
-            <Box className='w-full h-full flex justify-center items-center' sx={{ flexDirection: 'column' }}>
-                <Box id='signup-container' className='max-w-lg'>
-                    <Box className='pl-5 flex items-center gap-3 group mb-7'>
-                        <Box className='flex items-center justify-center rounded-xl from-primary to-accent group-hover:shadow-lg transition-shadow' sx={{ height: '2.25rem', width: '2.25rem', background: 'var(--gradient-primary)' }}>
-                            <TheatersRoundedIcon />
-                        </Box>
-                        <Link to='/' className='text-xl font-display tracking-wider gradient-text font-bold'>WATCHLIST</Link>
-                    </Box>
-                    <Label classes={'pl-5 font-display tracking-wider font-bold'} text="Create Account" variant="h1" sx={{ mb: 2, color: '#ffffff', fontSize: '2rem', letterSpacing: '0.025em' }} />
-                    <Label classes={'pl-5 font-display tracking-wider font-medium'} text="Join to start tracking your movies" variant="h6" sx={{ mb: 4, color: 'var(--muted-foreground)', fontSize: '1rem', letterSpacing: '0.025em' }} />
-                    <Card  className='w-full flex' sx={{ background: 'transparent'}}>
-                        <form className='pl-5 pr-5 pb-5'>
-                            <form.Field
-                                name='name'
-                                children={(field) => (
-                                    <>
-                                        {/*fullName*/}
-                                        <Label classes={'font-display tracking-wider font-medium font-bold'} text="Full Name" sx={{ fontSize: '0.875rem', color: '#ffffff' }} />
-                                        <TextField id='fullName' placeholder="John Doe" fullWidth sx={inputStyles}
-                                            slotProps={{
-                                                input: {
-                                                    startAdornment: (
-                                                        <InputAdornment position="start">
-                                                            <PersonOutlineIcon sx={{ color: '#666666' }} />
-                                                        </InputAdornment>
-                                                    ),
-                                                },
-                                            }}
-                                        />
-                                    </>
-                                )}
-                            />
-                            <form.Field
-                                name='email'
-                                children={(field) => (
-                                    <>
-                                        {/*Email*/}
-                                        <Label classes={'font-display tracking-wider font-medium font-bold'} text="Email" sx={{ fontSize: '0.875rem', color: '#ffffff' }} />
-                                        <TextField id='email' placeholder="john.doe@example.com" fullWidth sx={inputStyles}
-                                            slotProps={{
-                                                input: {
-                                                    startAdornment: (
-                                                        <InputAdornment position="start">
-                                                            <EmailOutlinedIcon sx={{ color: '#666666' }} />
-                                                        </InputAdornment>
-                                                    ),
-                                                },
-                                            }}
-                                        />
-                                    </>
-                                )}
-                            />
-                            <form.Field
-                                name='password'
-                                children={(field) => (
-                                    <>
-                                        {/*Password*/}
-                                        <Label classes={'font-display tracking-wider font-medium font-bold'} text="Password" sx={{ fontSize: '0.875rem', color: '#ffffff' }} />
-                                        <TextField id='password' placeholder="********" fullWidth sx={inputStyles}
-                                            slotProps={{
-                                                input: {
-                                                    startAdornment: (
-                                                        <InputAdornment position="start">
-                                                            <LockOutlinedIcon sx={{ color: '#666666' }} />
-                                                        </InputAdornment>
-                                                    ),
-                                                },
-                                            }}
-                                        />
-                                    </>
-                                )}
-                            />
-                            <form.Field
-                                name='confirmPassword'
-                                children={(field) => (
-                                    <>
-                                        {/*Confirm Password*/}
-                                        <Label classes={'font-display tracking-wider font-medium font-bold'} text="Confirm Password" sx={{ fontSize: '0.875rem', color: '#ffffff' }} />
-                                        <TextField id='confirmPassword' placeholder="********" fullWidth sx={inputStyles}
-                                            slotProps={{
-                                                input: {
-                                                    startAdornment: (
-                                                        <InputAdornment position="start">
-                                                            <LockOutlinedIcon sx={{ color: '#666666' }} />
-                                                        </InputAdornment>
-                                                    ),
-                                                },
-                                            }}
-                                        />
-                                    </>
-                                )}
-                            />
-                            <Button type="submit" variant="contained" fullWidth
-                                sx={buttonStyles}>
-                                Create Account
-                                <ArrowForwardIcon sx={{ ml: '1rem', fontSize: '1.125rem' }} />
-                            </Button>
-                            <Box className='flex justify-center items-center mt-7'>
-                                <Label classes={'mt-4 font-display tracking-wider font-medium'} text="Already have an account? " variant="h6" sx={{ color: 'var(--muted-foreground)', fontSize: '1rem' }} />
-                                <Link to='/dashboard/login' className='flex mb-2 font-display tracking-wider font-medium gradient-text ml-2' style={{ fontSize: '1rem', }}>Sign in</Link>
-                            </Box>
+};
 
-                        </form>
-                    </Card>
-                </Box>
-            </Box>
-        </Box>
-    );
-}
+const labelStyles = {
+    fontSize: '0.875rem',
+    color: '#ffffff',
+    fontWeight: 'bold'
+};
 
-export default Signup;
+const iconStyle = {
+    color: '#666666'
+};
