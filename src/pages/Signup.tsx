@@ -1,3 +1,4 @@
+import type { FormEvent } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useForm } from '@tanstack/react-form';
 import { sigupSchema } from '../validators/authValidators';
@@ -28,8 +29,17 @@ function Signup() {
             console.log(value)
         }
     });
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    
+        const onClickAction = () => {
+            form.handleSubmit();
+        }
+    
     return (
-        <Box className='flex h-full'>
+        <Box sx={parentContainerStyles}>
             <Box className='w-full h-full flex justify-center items-center'>
                 <Box className='w-100 h-100 bg-primary/20 rounded-full blur-[150px] pointer-events-none'></Box>
             </Box>
@@ -41,16 +51,16 @@ function Signup() {
                         </Box>
                         <Link to='/' className='text-xl font-display tracking-wider gradient-text font-bold'>WATCHLIST</Link>
                     </Box>
-                    <Label classes={'font-display tracking-wider'} text="Create Account" variant="h1" sx={titleStyles} />
-                    <Label classes={' font-display tracking-wider'} text="Join to start tracking your movies" variant="h6" sx={subTitleStyles} />
+                    <Label id="create-account-label" classes={'font-display tracking-wider'} text="Create Account" variant="h1" sx={titleStyles} />
+                    <Label id="join-tracking-label" classes={' font-display tracking-wider'} text="Join to start tracking your movies" variant="h6" sx={subTitleStyles} />
                     <Card sx={cardStyles}>
-                        <form className='pl-5 pr-5 pb-5'>
+                        <form className='pl-5 pr-5 pb-5' onSubmit={onSubmit}>
                              <form.Field
                                 name='name'
                                 children={(field) => (
                                     <>
                                         {/*fullName*/}
-                                        <FormField placeholder='John Doe' text='Full Name' sxLabel={labelStyles}
+                                        <FormField id="name" field={field} placeholder='John Doe' text='Full Name' sxLabel={labelStyles}
                                             sxTextField={inputStyles} icon={<PersonOutlineIcon sx={iconStyle} />} cls='tracking-wider'
                                         />
                                     </>
@@ -61,7 +71,7 @@ function Signup() {
                                 children={(field) => (
                                     <>
                                         {/*Email*/}
-                                        <FormField placeholder='john.doe@example.com' text='Email' sxLabel={labelStyles}
+                                        <FormField id="email" field={field} placeholder='john.doe@example.com' text='Email' sxLabel={labelStyles}
                                             sxTextField={inputStyles} icon={<EmailOutlinedIcon sx={iconStyle} />} cls='tracking-wider'
                                         />
                                     </>
@@ -72,7 +82,7 @@ function Signup() {
                                 children={(field) => (
                                     <>
                                         {/*Password*/}
-                                        <FormField placeholder='********' text='Password' sxLabel={labelStyles}
+                                        <FormField id="password" field={field} placeholder='********' text='Password' sxLabel={labelStyles}
                                             sxTextField={inputStyles} icon={<LockOutlinedIcon sx={iconStyle} />} cls='tracking-wider'
                                         />
                                     </>
@@ -83,19 +93,26 @@ function Signup() {
                                 children={(field) => (
                                     <>
                                         {/*Confirm Password*/}
-                                         <FormField placeholder='********' text='Confirm Password' sxLabel={labelStyles}
+                                         <FormField id="confirmPassword" field={field} placeholder='********' text='Confirm Password' sxLabel={labelStyles}
                                             sxTextField={inputStyles} icon={<LockOutlinedIcon sx={iconStyle} />} cls='tracking-wider'
                                         />
                                     </>
                                 )}
                             />
-                            <Button type="submit" variant="contained" fullWidth
-                                sx={buttonStyles}>
-                                Sign In
-                                <ArrowForwardIcon sx={{ ml: '1rem', fontSize: '1.125rem' }} />
-                            </Button>
+                             <form.Subscribe
+                                selector={(state) => [state.canSubmit, state.isSubmitting]}
+                                children={([canSubmit, isSubmitting]) => (
+                                    <>
+                                        <Button type="submit" variant="contained" fullWidth sx={buttonStyles}
+                                            disabled={!canSubmit || isSubmitting} onClick={onClickAction}>
+                                            {isSubmitting ? '...' : 'Sign Up'}
+                                            <ArrowForwardIcon sx={{ ml: '1rem', fontSize: '1.125rem' }} />
+                                        </Button>
+                                    </>
+                                )}
+                            />
                             <Box className='flex justify-center items-center mt-7'>
-                                <Label classes={'font-display tracking-wider'} text="Already have an account ?" variant="h6"
+                                <Label id="already-have-account-label" classes={'font-display tracking-wider'} text="Already have an account ?" variant="h6"
                                     sx={linkTitleStyles} />
                                 <Link to='/dashboard/login' className='flex mb-2 font-display tracking-wider font-medium gradient-text ml-2' style={{ fontSize: '1rem', }}>Sign in</Link>
                             </Box>
@@ -181,6 +198,7 @@ const inputStyles = {
         fontSize: '0.875rem',
         color: '#ffffff',
         mb: 3,
+        width: '23rem',
         maxWidth: '28rem',
         '& fieldset': {
             borderColor: '#333333',

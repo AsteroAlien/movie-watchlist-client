@@ -1,16 +1,17 @@
 import { boxClasses, Typography, type SxProps } from '@mui/material';
 
 interface ILabel {
-    text: string,
-    sx?: SxProps,
-    classes?: string,
-    variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' 
+    id: string;
+    text: string;
+    sx?: SxProps;
+    classes?: string;
+    variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'; 
 };
 
-function Label({ text, sx, variant, classes }: ILabel) {
+function Label({ id, text, sx, variant, classes }: ILabel) {
 
     return (
-        <Typography className={classes} variant={variant} sx={{...sx }} gutterBottom>
+        <Typography id={id} className={classes} variant={variant} sx={{...sx }} gutterBottom>
             {text}
         </Typography>
     );

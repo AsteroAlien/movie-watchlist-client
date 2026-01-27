@@ -1,18 +1,19 @@
-import Box from '@mui/material/Box';
+import { type FormEvent } from 'react';
+import { type ChangeEvent } from 'react';
+
+import { Link } from '@tanstack/react-router';
 import { useForm } from '@tanstack/react-form';
 import { loginSchema } from '../validators/authValidators';
+
+import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Label from '../components/Label';
-import TheatersRoundedIcon from '@mui/icons-material/TheatersRounded';
-import { Link } from '@tanstack/react-router';
-import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Button from '@mui/material/Button';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-
-
 import FormField from './../components/FormField';
-
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import TheatersRoundedIcon from '@mui/icons-material/TheatersRounded';
 
 function Login() {
     const form = useForm({
@@ -27,6 +28,16 @@ function Login() {
             console.log(value)
         }
     });
+
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    const onClickAction = () => {
+        form.handleSubmit();
+    }
+
     return (
         <Box sx={parentContainerStyles}>
             <Box sx={formContainerStyles}>
@@ -37,18 +48,18 @@ function Login() {
                         </Box>
                         <Link to='/' className='text-xl font-display tracking-wider gradient-text font-bold'>WATCHLIST</Link>
                     </Box>
-                    <Label classes={'font-display tracking-wider'} text="WELCOME BACK" variant="h1" sx={titleStyles} />
-                    <Label classes={' font-display tracking-wider'} text="Sign in to continue to your watchlist" variant="h6" sx={subTitleStyles} />
+                    <Label id="welcome-back-label" classes={'font-display tracking-wider'} text="WELCOME BACK" variant="h1" sx={titleStyles} />
+                    <Label id="sign-in-continue-label" classes={' font-display tracking-wider'} text="Sign in to continue to your watchlist" variant="h6" sx={subTitleStyles} />
                     <Card sx={cardStyles}>
-                        <form className='pl-5 pr-5 pb-5'>
+                        <form className='pl-5 pr-5 pb-5' onSubmit={onSubmit}>
                             <form.Field
                                 name='email'
                                 children={(field) => (
                                     <>
                                         {/*Email*/}
-                                        <FormField placeholder='john.doe@example.com' text='Email' sxLabel={labelStyles}
+                                        <FormField id="email" field={field} placeholder='john.doe@example.com' text='Email' sxLabel={labelStyles}
                                             sxTextField={inputStyles} icon={<EmailOutlinedIcon sx={iconStyle} />} cls='tracking-wider'
-                                        />
+                                        /> 
                                     </>
                                 )}
                             />
@@ -57,19 +68,26 @@ function Login() {
                                 children={(field) => (
                                     <>
                                         {/*Password*/}
-                                        <FormField placeholder='********' text='Password' sxLabel={labelStyles}
+                                        <FormField id="password" field={field} placeholder='********' text='Password' sxLabel={labelStyles}
                                             sxTextField={inputStyles} icon={<LockOutlinedIcon sx={iconStyle} />} cls='tracking-wider'
-                                        />
+                                        />   
                                     </>
                                 )}
                             />
-                            <Button type="submit" variant="contained" fullWidth
-                                sx={buttonStyles}>
-                                Sign In
-                                <ArrowForwardIcon sx={{ ml: '1rem', fontSize: '1.125rem' }} />
-                            </Button>
+                            <form.Subscribe
+                                selector={(state) => [state.canSubmit, state.isSubmitting]}
+                                children={([canSubmit, isSubmitting]) => (
+                                    <>
+                                        <Button type="submit" variant="contained" fullWidth sx={buttonStyles}
+                                            disabled={!canSubmit || isSubmitting} onClick={onClickAction}>
+                                            {isSubmitting ? '...' : 'Sign In'}
+                                            <ArrowForwardIcon sx={{ ml: '1rem', fontSize: '1.125rem' }} />
+                                        </Button>
+                                    </>
+                                )}
+                            />
                             <Box className='flex justify-center items-center mt-7'>
-                                <Label classes={'font-display tracking-wider'} text="Don't have an account ? " variant="h6"
+                                <Label id="dont-have-account-label" classes={'font-display tracking-wider'} text="Don't have an account ? " variant="h6"
                                     sx={linkTitleStyles} />
                                 <Link to='/dashboard/signup' className='flex mb-2 font-display tracking-wider font-medium gradient-text ml-2' style={{ fontSize: '1rem', }}>Sign up</Link>
                             </Box>
@@ -158,6 +176,7 @@ const inputStyles = {
         fontSize: '0.875rem',
         color: '#ffffff',
         mb: 3,
+        width: '23rem',
         maxWidth: '28rem',
         '& fieldset': {
             borderColor: '#333333',
@@ -195,7 +214,8 @@ const buttonStyles = {
 const labelStyles = {
     fontSize: '0.875rem',
     color: '#ffffff',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    mt: 3
 };
 
 const iconStyle = {
