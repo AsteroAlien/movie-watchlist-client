@@ -2,6 +2,20 @@ import type { FormEvent } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useForm } from '@tanstack/react-form';
 import { sigupSchema } from '../validators/authValidators';
+import {
+    parentContainerStyles,
+    formContainerStyles,
+    formHeaderStyles,
+    formIconStyles,
+    titleStyles,
+    subTitleStyles,
+    cardStyles,
+    inputStyles,
+    buttonStyles,
+    labelStyles,
+    iconStyle,
+    linkTitleStyles
+} from '../styles/authFormStyles';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -23,7 +37,7 @@ function Signup() {
             confirmPassword: ''
         },
         validators: {
-            onChange: sigupSchema
+            onSubmit: sigupSchema
         },
         onSubmit: async ({ value }) => {
             console.log(value)
@@ -123,122 +137,4 @@ function Signup() {
         </Box>
     );
 }
-
 export default Signup;
-
-/*Styles*/
-const parentContainerStyles = {
-    display: 'flex',
-    height: '100%'
-};
-
-const titleStyles = {
-    pl: '1.25rem',
-    mb: 2,
-    fontWeight: 'bold',
-    color: '#ffffff',
-    fontSize: '2rem',
-    letterSpacing: '0.025em'
-}
-
-const subTitleStyles = {
-    mb: 3,
-    pl: '1.25rem',
-    color: 'var(--muted-foreground)',
-    fontSize: '1rem',
-    fontWeight: 500,
-    letterSpacing: '0.025em'
-}
-
-const linkTitleStyles = {
-    color: 'var(--muted-foreground)',
-    fontWeight: 500,
-    fontSize: '1rem'
-}
-
-const cardStyles = {
-    width: '100%',
-    display: 'flex',
-    background: 'transparent'
-}
-
-const formContainerStyles = {
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column'
-};
-
-const formHeaderStyles = {
-    display: 'flex',
-    alignItems: 'center',
-    mb: '1.75rem',
-    gap: '0.75rem',
-    paddingLeft: '1.25rem'
-};
-
-const formIconStyles = {
-    height: '2.25rem',
-    width: '2.25rem',
-    background: 'var(--gradient-primary)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: '0.75rem'
-};
-
-const inputStyles = {
-    width: "100%",
-    '& .MuiOutlinedInput-root': {
-        backgroundColor: '#1a1a1a',
-        height: '2.75rem',
-        borderRadius: '0.5rem',
-        fontSize: '0.875rem',
-        color: '#ffffff',
-        mb: 3,
-        width: '23rem',
-        maxWidth: '28rem',
-        '& fieldset': {
-            borderColor: '#333333',
-        },
-        '&:hover fieldset': {
-            borderColor: '#555555',
-        },
-        '&.Mui-focused fieldset': {
-            borderColor: 'var(--primary)',
-        },
-    },
-    '& .MuiOutlinedInput-input': {
-        padding: '0.75rem 1rem',
-    },
-};
-
-const buttonStyles = {
-    height: '2.75rem',
-    borderRadius: '0.5rem',
-    background: 'var(--gradient-primary)',
-    fontSize: '0.875rem',
-    fontWeight: 600,
-    textTransform: 'none',
-    letterSpacing: '0.025em',
-    mt: 2,
-    maxWidth: '28rem',
-    transition: 'transform 0.2s ease-in-out',
-    '&:hover': {
-        background: 'var(--gradient-primary)',
-        opacity: 0.9,
-        transform: 'scale(1.05)',
-    },
-};
-
-const labelStyles = {
-    fontSize: '0.875rem',
-    color: '#ffffff',
-    fontWeight: 'bold'
-};
-
-const iconStyle = {
-    color: '#666666'
-};
